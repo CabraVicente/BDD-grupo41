@@ -2,7 +2,7 @@ import psycopg2 as psql
 import os
 
 conexion_insana = psql.connect(
-    database="grupo41",
+    database="grupo41e2",
     user="grupo41",
     host="localhost",
     password="2_balas",

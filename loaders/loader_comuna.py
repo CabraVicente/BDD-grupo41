@@ -3,7 +3,7 @@ import os
 
 # Conexión a la base de datos
 conexion_insana = psql.connect(
-    database="grupo41",
+    database="grupo41e2",
     user="grupo41",
     host="localhost",
     password="2_balas",

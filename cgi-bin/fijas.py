@@ -1,5 +1,11 @@
+#!/usr/bin/python3
+
 import psycopg2 as psql
+from web_table import print_table
 import cgi
+import cgitb
+
+cgitb.enable()
 
 try:
     conn = psql.connect(
@@ -16,7 +22,16 @@ cur = conn.cursor()
 
 form = cgi.FieldStorage()
 nombre = form.getvalue("nombre")
-print(nombre)
+consulta = form.getvalue("type")
+
+consulta = int(consulta)
+resultado = {"nombres":["vacio"], "datos":[[0]]}
+
+match consulta:
+    case 1:
+        resultado["nombres"][0] = "Restaurante"
+
+print_table(resultado)
 
 cur.close()
 conn.close()
