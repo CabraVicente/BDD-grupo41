@@ -36,10 +36,10 @@ for linea in despachadores[1:]:
         continue
 
     clientenombre, clienteemail, clientetelefono, clienteclave, deliverynombre, deliveryvigente, deliverytelefono, deliverytiempo, deliverypreciounitario, deliverypreciomensual, deliveryprecioanual, despachadornombre, despachadortelefono = linea.strip().split(";")
-
+    """
     if (len(nombre) > 30 or len(correo) > 30 or len(telefono) > 11 or len(clave) > 30 or len(direccion) > 30):
         print("dato no calza: "+linea)
-        continue
+        continue"""
 
     cur.execute(
         "INSERT INTO DESPACHADOR(nombre, telefono) VALUES (%s, %s)",
