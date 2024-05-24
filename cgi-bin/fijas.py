@@ -31,21 +31,21 @@ consulta = form.getvalue("type")
 consulta = int(consulta)
 resultado = {"nombres":["vacio"], "datos":[[0]]}
 
-match consulta:
-    case 0:
-        if (param[2] != None):
-            cur.execute(
-                """SELECT %s FROM %s WHERE %s""" %
-                (param[0], param[1], param[2])
-            )
-        else:
-            cur.execute(
-                """SELECT %s FROM %s""" %
-                (param[0], param[1])
-            )
-        resultado["datos"] = cur.fetchall()
-    case 1:
-        resultado["nombres"][0] = "Restaurante"
+
+if consulta == 0:
+    if (param[2] != None):
+        cur.execute(
+            """SELECT %s FROM %s WHERE %s""" %
+            (param[0], param[1], param[2])
+        )
+    else:
+        cur.execute(
+            """SELECT %s FROM %s""" %
+            (param[0], param[1])
+        )
+    resultado["datos"] = cur.fetchall()
+elif consulta == 1:
+    resultado["nombres"][0] = "Restaurante"
 
 print_table(resultado)
 
