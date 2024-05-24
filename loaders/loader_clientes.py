@@ -15,6 +15,8 @@ cur.execute("DROP TABLE IF EXISTS CLIENTES;")
 
 script_dir = os.path.dirname(__file__)
 csv_path = os.path.join(script_dir, "../datos/clientes.csv")
+#ola cabra por ahora voy a cambiar este path pa poder ejecutar la cosa despues vemos como arreglarlo bien
+csv_path = "./data/clientes.csv"
 
 with open(csv_path, "r") as clientes:
     cliente = clientes.readlines()
