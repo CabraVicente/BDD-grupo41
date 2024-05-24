@@ -36,7 +36,7 @@ cur.execute(
     );"""
 )
 
-data = loader.load_table("./data/pedidos.csv")
+data = loader.load_table("./data/pedidos2.csv")
 for x in data["datos"]:
     id, cliente, sucursal, delivery, despachador, plato, fecha, hora, estado = x
     cur.execute(
