@@ -20,7 +20,8 @@ def print_table(table):
             
             print("<tr>")
             for i in range(n_columnas):
-                print(f"<th>{table["nombres"][i]}</th>")
+                nombre = table["nombres"][i]
+                print(f"<th>{nombre}</th>")
             print("</tr>")
 
             for f in table["datos"]:
