@@ -23,8 +23,20 @@
     </form>
 
     <form action="./cgi-bin/consultas.py?type=2" method="post">
-        <h3>Pedidos de un cliente</h3>
-        Email del cliente: <input type="text" name="param0"><br>
+        <h3>2. Pedidos de un cliente</h3>
+        Email del cliente: <input type="email" name="param0"><br>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=3" method="post">
+        <h3>3. Pedidos concretados y cancelados</h3>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=4" method="post">
+        <h3>4 y 5. Platos segun su estilo</h3>
+        Estilo: <input type="text" name="param0"><br>
+        Mostrar restaurantes que lo ofrecen<input type="checkbox" id="restaurantes" name="param1"><br>
         <input type="submit" value="Consultar">
     </form>
 </body>
