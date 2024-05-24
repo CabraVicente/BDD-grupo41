@@ -4,49 +4,45 @@ import loader_tools as loader
 conn = loader.connect()
 cur = conn.cursor()
 
-cur.execute("DROP TABLE IF EXISTS Restaurante;")
+cur.execute("DROP TABLE IF EXISTS Restaurante CASCADE;")
 cur.execute("DROP TABLE IF EXISTS Sucursal;")
 
 data = loader.load_table("./data/restaurantes.csv")
 
 cur.execute(
     """CREATE TABLE Restaurante(
-    id_restaurante VARCHAR(30) PRIMARY KEY,
-    nombre VARCHAR(30),
+    nombre VARCHAR(30) PRIMARY KEY,
     estilo TEXT,
-    precio_minimo_despacho_gratis INT
+    repartomin INT
     );"""
 )
 cur.execute(
     """CREATE TABLE Sucursal(
-    nombre TEXT PRIMARY KEY,
-    CONSTRAINT id_restaurante
-        FOREIGN KEY(id_restaurante)
-            REFERENCES Restaurante(id_restaurante)
+    sucursal TEXT PRIMARY KEY,
     direccion VARCHAR(30),
-    telefono TEXT
-    area_de_despacho TEXT
+    telefono TEXT,
+    area_de_despacho TEXT,
+    restaurante_nombre VARCHAR(30),
+    CONSTRAINT restaurante_nombre
+        FOREIGN KEY(restaurante_nombre)
+            REFERENCES Restaurante(nombre)
     );"""
 )
 conn.commit()
 
-# RECORDAR: encriptar clave
-for linea in cliente[1:]:
-    if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
-        print("ERROR en linea: "+linea)
-        continue
-
-    nombre, correo, telefono, clave, direccion, comuna_cut = linea.strip().split(";")
-    if (len(nombre) > 30 or len(correo) > 30 or len(telefono) > 11 or len(clave) > 30 or len(direccion) > 30):
-        print("dato no calza: "+linea)
-        continue
-
+for fila in data["datos"]:
+    nombre, vigente, estilo, repartomin, sucursal, direccion, telefono, area = fila
     cur.execute(
-        "INSERT INTO CLIENTES(nombre, correo, telefono, clave, direccion, comuna_cut) VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (correo) DO NOTHING",
-        (nombre, correo, telefono[2:], clave, direccion, int(comuna_cut))
+        "INSERT INTO Restaurante(nombre, estilo, repartomin) VALUES (%s, %s, %s) ON CONFLICT (nombre) DO NOTHING",
+        (nombre, estilo, int(repartomin))
+    )
+    conn.commit()
+    cur.execute(
+        "INSERT INTO Sucursal(sucursal, restaurante_nombre, direccion, telefono, area_de_despacho) VALUES (%s, %s, %s, %s, %s)",
+        (sucursal, nombre[:30], direccion[:30], telefono, area)
     )
 # En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'
 
-conexion_insana.commit()
+conn.commit()
 cur.close()
-conexion_insana.close()
+conn.close()

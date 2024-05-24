@@ -5,7 +5,7 @@ import os
 conexion_insana = psql.connect(
     database="grupo41e2",
     user="grupo41",
-    host="localhost",
+    host="pavlov.ing.puc.cl",
     password="2_balas",
     port=5432
 )
@@ -20,7 +20,7 @@ script_dir = os.path.dirname(__file__)
 csv_path = os.path.join(script_dir, "../datos/comunas.csv")
 
 # Lee el archivo CSV
-with open(csv_path, "r") as comuna:
+with open("./data/comuna.csv", "r") as comuna:
     comunas = comuna.readlines()
 headers = comunas[0].strip().split(",")
 

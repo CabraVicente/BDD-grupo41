@@ -1,7 +1,7 @@
 import psycopg2 as psql
 import csv
 
-def connect() -> psql.connection:
+def connect():
     conn = psql.connect(
         database="grupo41e2",
         user="grupo41",

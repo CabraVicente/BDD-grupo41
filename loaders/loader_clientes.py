@@ -11,7 +11,7 @@ conexion_insana = psql.connect(
 
 cur = conexion_insana.cursor()
 
-cur.execute("DROP TABLE IF EXISTS CLIENTES;")
+cur.execute("DROP TABLE IF EXISTS CLIENTES CASCADE;")
 
 script_dir = os.path.dirname(__file__)
 csv_path = os.path.join(script_dir, "../datos/clientes.csv")
@@ -50,7 +50,7 @@ for linea in cliente[1:]:
         continue
 
     cur.execute(
-        "INSERT INTO CLIENTES(nombre, correo, telefono, clave, direccion, comuna_cut) VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (correo) DO NOTHING",
+        "INSERT INTO CLIENTES(nombre, correo, telefono, clave, direccion, comuna_cut) VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (correo) DO NOTHING;",
         (nombre, correo, telefono[2:], clave, direccion, int(comuna_cut))
     )
 # En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'
