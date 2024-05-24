@@ -31,6 +31,8 @@ consulta = form.getvalue("type")
 consulta = int(consulta)
 resultado = {"nombres":["vacio"], "datos":[[0]]}
 
+def result_get(cursor):
+    return {"nombres":[d[0] for d in cur.description], "datos":cur.fetchall()}
 
 if consulta == 0:
     if (param[2] != None):
@@ -43,10 +45,14 @@ if consulta == 0:
             """SELECT %s FROM %s""" %
             (param[0], param[1])
         )
-    resultado["nombres"] = [d[0] for d in cur.description]
-    resultado["datos"] = cur.fetchall()
+    resultado = result_get(cur)
 elif consulta == 1:
-    resultado["nombres"][0] = "Restaurante"
+    cur.execute(
+        """SELECT restaurante.nombre FROM restaurante,plato
+        WHERE plato.restaurante_nombre = restaurante.nombre AND plato.nombre=%s AND plato.disponibilidad=True""",
+        (param[0],)
+    )
+    resultado = result_get(cur)
 
 print_table(resultado)
 

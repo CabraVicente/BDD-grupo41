@@ -10,11 +10,14 @@ def print_table(table):
         if (line != "<!--tabla-->\n"):
             print(line)
         else:
-            n_columnas = len(table["datos"][0])
-            
-            # rellenar nombres con cosas vacias en caso de que no coincidan
-            for i in range(len(table["nombres"]), n_columnas):
-                table["nombres"].append("")
+            if (len(table["datos"]) > 0):
+                n_columnas = len(table["datos"][0])
+
+                # rellenar nombres con cosas vacias en caso de que no coincidan
+                for i in range(len(table["nombres"]), n_columnas):
+                    table["nombres"].append("")
+            else:
+                n_columnas = len(table["nombres"])
 
             print("<table>")
             

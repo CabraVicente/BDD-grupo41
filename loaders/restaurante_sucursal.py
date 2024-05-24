@@ -21,7 +21,7 @@ cur.execute(
     sucursal TEXT,
     restaurante_nombre VARCHAR(30) references Restaurante(nombre),
     direccion VARCHAR(30),
-    telefono TEXT,
+    telefono TEXT NOT NULL,
     area_de_despacho TEXT,
     PRIMARY KEY (sucursal, restaurante_nombre)
     );"""
