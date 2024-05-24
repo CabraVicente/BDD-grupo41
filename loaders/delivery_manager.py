@@ -11,38 +11,33 @@ conexion_insana = psql.connect(
 
 cur = conexion_insana.cursor()
 
-cur.execute("DROP TABLE IF EXISTS DESPACHADOR;")
+cur.execute("DROP TABLE IF EXISTS DELIVERY_MANAGER;")
 
 script_dir = os.path.dirname(__file__)
 csv_path = "./data/cldeldes.csv"
 
 with open(csv_path, "r") as texto:
-    despachadores = texto.readlines()
-headers = despachadores[0].strip().split(";")
+    deliveries = texto.readlines()
+headers = deliveries[0].strip().split(";")
 
 cur.execute(
-    """CREATE TABLE DESPACHADOR(
-    nombre VARCHAR(30),
-    telefono VARCHAR(9) PRIMARY KEY
+    """CREATE TABLE DELIVERY_MANAGER(
+    nombre VARCHAR(30) PRIMARY KEY,
+    vigente BOOLEAN
     );"""
 )
 conexion_insana.commit()
 
-# RECORDAR: encriptar clave
-for linea in despachadores[1:]:
+for linea in deliveries[1:]:
     if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
         print("ERROR en linea: "+linea)
         continue
 
     clientenombre, clienteemail, clientetelefono, clienteclave, deliverynombre, deliveryvigente, deliverytelefono, deliverytiempo, deliverypreciounitario, deliverypreciomensual, deliveryprecioanual, despachadornombre, despachadortelefono = linea.strip().split(";")
-    """
-    if (len(nombre) > 30 or len(correo) > 30 or len(telefono) > 11 or len(clave) > 30 or len(direccion) > 30):
-        print("dato no calza: "+linea)
-        continue"""
 
     cur.execute(
-        "INSERT INTO DESPACHADOR(nombre, telefono) VALUES (%s, %s) ON CONFLICT (telefono) DO NOTHING",
-        (despachadornombre, despachadortelefono[2:])
+        "INSERT INTO DELIVERY_MANAGER(nombre, vigente) VALUES (%s, %s) ON CONFLICT (nombre) DO NOTHING",
+        (deliverynombre, bool(deliveryvigente))
     )
 # En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'
 
