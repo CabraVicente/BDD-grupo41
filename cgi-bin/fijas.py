@@ -43,6 +43,7 @@ if consulta == 0:
             """SELECT %s FROM %s""" %
             (param[0], param[1])
         )
+    resultado["nombres"] = [d[0] for d in cur.description]
     resultado["datos"] = cur.fetchall()
 elif consulta == 1:
     resultado["nombres"][0] = "Restaurante"

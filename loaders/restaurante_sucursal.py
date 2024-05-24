@@ -18,14 +18,12 @@ cur.execute(
 )
 cur.execute(
     """CREATE TABLE Sucursal(
-    sucursal TEXT PRIMARY KEY,
+    sucursal TEXT,
+    restaurante_nombre VARCHAR(30) references Restaurante(nombre),
     direccion VARCHAR(30),
     telefono TEXT,
     area_de_despacho TEXT,
-    restaurante_nombre VARCHAR(30),
-    CONSTRAINT restaurante_nombre
-        FOREIGN KEY(restaurante_nombre)
-            REFERENCES Restaurante(nombre)
+    PRIMARY KEY (sucursal, restaurante_nombre)
     );"""
 )
 conn.commit()
@@ -38,7 +36,7 @@ for fila in data["datos"]:
     )
     conn.commit()
     cur.execute(
-        "INSERT INTO Sucursal(sucursal, restaurante_nombre, direccion, telefono, area_de_despacho) VALUES (%s, %s, %s, %s, %s)",
+        "INSERT INTO Sucursal(sucursal, restaurante_nombre, direccion, telefono, area_de_despacho) VALUES (%s, %s, %s, %s, %s) ON CONFLICT (sucursal, restaurante_nombre) DO NOTHING",
         (sucursal, nombre[:30], direccion[:30], telefono, area)
     )
 # En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'

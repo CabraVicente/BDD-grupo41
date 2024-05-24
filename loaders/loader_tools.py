@@ -24,3 +24,6 @@ def load_table(filename):
 
 def disconnect(connection):
     connection.close()
+
+data = load_table("./data/cldeldes.csv")
+print(data["datos"][0])
