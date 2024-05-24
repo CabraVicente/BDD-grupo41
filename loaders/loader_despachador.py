@@ -14,7 +14,7 @@ cur = conexion_insana.cursor()
 cur.execute("DROP TABLE IF EXISTS DESPACHADOR;")
 
 script_dir = os.path.dirname(__file__)
-csv_path = os.path.join(script_dir, "./datos/cldeldes.csv")
+csv_path = "./data/cldeldes.csv"
 
 with open(csv_path, "r") as texto:
     despachadores = texto.readlines()
