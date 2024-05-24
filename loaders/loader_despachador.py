@@ -30,7 +30,6 @@ conexion_insana.commit()
 
 # RECORDAR: encriptar clave
 for linea in despachadores[1:]:
-    print(linea)
     if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
         print("ERROR en linea: "+linea)
         continue
