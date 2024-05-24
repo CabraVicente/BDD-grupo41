@@ -31,14 +31,16 @@ conexion_insana.commit()
 # RECORDAR: encriptar clave
 for linea in despachadores[1:]:
     print(linea)
-    clientenombre, clienteemail, clientetelefono, clienteclave, deliverynombre, deliveryvigente, deliverytelefono, deliverytiempo, deliverypreciounitario, deliverypreciomensual, deliveryprecioanual, despachadornombre, despachadortelefono = linea.strip().split(";")
-    """ if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
+    if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
         print("ERROR en linea: "+linea)
         continue
+
+    clientenombre, clienteemail, clientetelefono, clienteclave, deliverynombre, deliveryvigente, deliverytelefono, deliverytiempo, deliverypreciounitario, deliverypreciomensual, deliveryprecioanual, despachadornombre, despachadortelefono = linea.strip().split(";")
+
     if (len(nombre) > 30 or len(correo) > 30 or len(telefono) > 11 or len(clave) > 30 or len(direccion) > 30):
         print("dato no calza: "+linea)
         continue
-"""
+
     cur.execute(
         "INSERT INTO DESPACHADOR(nombre, telefono) VALUES (%s, %s)",
         (despachadornombre, despachadortelefono[2:])
