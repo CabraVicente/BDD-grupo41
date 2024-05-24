@@ -10,7 +10,8 @@ import loaders.deliverymanager
 print("Loaded delivery managers")
 import loaders.despachador
 print("Loaded despachadores")
-#import loaders.pedido # Le falta todavia xd
+#import loaders.pedido_calificacion
+#print("Loaded Pedido y Calificacion")
 import loaders.restaurante_sucursal
 print("Loaded restaurantes y sucursales")
 import loaders.plato # Necesita que exista la tabla Restaurante

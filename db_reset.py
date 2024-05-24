@@ -11,7 +11,8 @@ tables = [
     "Direccion",
     "DeliveryManager",
     "Despachador",
-    "Pedido",
+    #"Pedido",
+    #"Calificacion",
     "Plato",
     "Restaurante",
     "Sucursal"
