@@ -1,11 +1,8 @@
 import psycopg2 as psql
-import loader_tools as loader
+import loaders.tools as loader
 
 conn = loader.connect()
 cur = conn.cursor()
-
-cur.execute("DROP TABLE IF EXISTS Restaurante CASCADE;")
-cur.execute("DROP TABLE IF EXISTS Sucursal;")
 
 data = loader.load_table("./data/restaurantes.csv")
 
@@ -43,4 +40,4 @@ for fila in data["datos"]:
 
 conn.commit()
 cur.close()
-conn.close()
+loader.disconnect(conn)

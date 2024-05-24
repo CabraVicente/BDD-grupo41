@@ -1,5 +1,5 @@
 import psycopg2 as psql
-import loader_tools as loader
+import loaders.tools as loader
 
 conn = loader.connect()
 cur = conn.cursor()
@@ -36,4 +36,4 @@ for fila in tabla["datos"]:
 
 conn.commit()
 cur.close()
-conn.close()
+loader.disconnect(conn)
