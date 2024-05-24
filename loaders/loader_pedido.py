@@ -24,9 +24,10 @@ cur.execute(
     """CREATE TABLE PEDIDOS (
     id INTEGER PRIMARY KEY,
     estado TEXT,
-    fecha_hora TIMESTAMP,
+    fecha_hora TIMESTAMP
     );"""
 )
+
 cur.execute(
     """CREATE TABLE CALIFICACION (
     id_pedido INTEGER,
