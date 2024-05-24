@@ -30,7 +30,7 @@ cur.execute(
     """CREATE TABLE CLIENTES(
     nombre VARCHAR(30),
     correo VARCHAR(30) PRIMARY KEY,
-    telefono VARCHAR(11),
+    telefono VARCHAR(9),
     clave VARCHAR(30),
     direccion VARCHAR(30),
     comuna_cut INTEGER
