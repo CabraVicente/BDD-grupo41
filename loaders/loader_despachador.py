@@ -39,7 +39,7 @@ for linea in despachadores[1:]:
         continue
 """
     cur.execute(
-        "INSERT INTO CLIENTES(nombre, telefono) VALUES (%s, %s) ON CONFLICT (telefono) DO NOTHING",
+        "INSERT INTO CLIENTES(nombre, telefono) VALUES (%s, %s)",
         (despachadornombre, despachadortelefono[2:])
     )
 # En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'
