@@ -4,7 +4,7 @@ import os
 conexion_insana = psql.connect(
     database="grupo41e2",
     user="grupo41",
-    host="localhost",
+    host="pavlov.ing.puc.cl",
     password="2_balas",
     port=5432
 )
@@ -23,16 +23,16 @@ with open(csv_path, "r") as clientes:
 headers = cliente[0].strip().split(";")
 
 # comuna como tal contiene nombre de comuna y su cut, esto sirve para pasarlo a tupla
-# en base a esto podríamos sacar uno de los dos (ejemplo: cut) y lo conectamos con la tabla de comunas.
-# EN CASO DE TOMAR CUT DEJAR EL ÚLTIMO ATRIBUTO COMO 'comuna_cut INTEGER', y especificar en el informe.
+# en base a esto podrÃ­amos sacar uno de los dos (ejemplo: cut) y lo conectamos con la tabla de comunas.
+# EN CASO DE TOMAR CUT DEJAR EL ÃšLTIMO ATRIBUTO COMO 'comuna_cut INTEGER', y especificar en el informe.
 # Para la limpieza ver datos que no cumplan con los requisitos.
 cur.execute(
     """CREATE TABLE CLIENTES(
     nombre VARCHAR(30),
-    correo VARCHAR(60) PRIMARY KEY,
-    telefono VARCHAR(9),
+    correo VARCHAR(30) PRIMARY KEY,
+    telefono VARCHAR(11),
     clave VARCHAR(30),
-    direccion VARCHAR(60),
+    direccion VARCHAR(30),
     comuna_cut INTEGER
     );"""
 )
@@ -40,12 +40,20 @@ conexion_insana.commit()
 
 # RECORDAR: encriptar clave
 for linea in cliente[1:]:
+    if (linea.count(";") < 5 or linea.count('"') % 2 == 1):
+        print("ERROR en linea: "+linea)
+        continue
+
     nombre, correo, telefono, clave, direccion, comuna_cut = linea.strip().split(";")
+    if (len(nombre) > 30 or len(correo) > 30 or len(telefono) > 11 or len(clave) > 30 or len(direccion) > 30):
+        print("dato no calza: "+linea)
+        continue
+
     cur.execute(
-        "INSERT INTO CLIENTES(nombre, correo, telefono, clave, direccion, comuna_cut) VALUES (%s, %s, %s, %s, %s, %s)",
+        "INSERT INTO CLIENTES(nombre, correo, telefono, clave, direccion, comuna_cut) VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (correo) DO NOTHING",
         (nombre, correo, telefono[2:], clave, direccion, int(comuna_cut))
     )
-# En caso de que el loader no esté del todo completo, añadir crear tabla 'CLIENTE' y dropear 'CLIENTES'
+# En caso de que el loader no estÃ© del todo completo, aÃ±adir crear tabla 'CLIENTE' y dropear 'CLIENTES'
 
 conexion_insana.commit()
 cur.close()

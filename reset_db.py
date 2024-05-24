@@ -3,7 +3,7 @@ import psycopg2 as psql
 conn = psql.connect(
     database="grupo41e2",
     user="grupo41",
-    host="localhost",
+    host="pavlov.ing.puc.cl",
     password="2_balas",
     port=5432
 )
