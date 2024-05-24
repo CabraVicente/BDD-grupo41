@@ -4,7 +4,7 @@ body {
     background-color: rgb(27, 35, 43);
     color: #efefef;
     padding: 20px;
-    text-align: left;
+    text-align: center;
 }
 
 h2 {
@@ -12,28 +12,44 @@ h2 {
     color: #efefef;
 }
 
+h3 {
+    text-align: left;
+    color: #efefef;
+    margin-top: 0%;
+}
+
 table {
-    width: 100%;
+    max-width: 100%;
+    min-width: 5%;
     border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 th, td {
-    border: 1px solid black;
+    border: 3px solid rgb(18, 20, 23);
     padding: 8px;
     text-align: left;
 }
 
+td {
+    background-color: #2a3b53;
+}
+
 th {
-    background-color: #f2f2f2;
+    background-color: #4d6284;
 }
 
 form {
     max-width: 700px;
-    margin: 0 auto;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #233756;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
 p {
@@ -47,4 +63,6 @@ label {
     margin-bottom: 10px;
 }
 
-
+input[type="submit"] {
+    margin-top: 10px;
+}

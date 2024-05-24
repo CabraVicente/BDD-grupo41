@@ -10,5 +10,24 @@ def print_table(table):
         if (line != "<!--tabla-->\n"):
             print(line)
         else:
-            print(table)
+            n_columnas = len(table["datos"][0])
+            
+            # rellenar nombres con cosas vacias en caso de que no coincidan
+            for i in range(len(table["nombres"]), n_columnas):
+                table["nombres"].append("")
+
+            print("<table>")
+            
+            print("<tr>")
+            for i in range(n_columnas):
+                print(f"<th>{table["nombres"][i]}</th>")
+            print("</tr>")
+
+            for f in table["datos"]:
+                print("<tr>")
+                for i in range(n_columnas):
+                    print(f"<td>{f[i]}</td>")
+                print("</tr>")
+            
+            print("</table>")
     file.close()
