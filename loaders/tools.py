@@ -24,3 +24,29 @@ def load_table(filename):
 
 def disconnect(connection):
     connection.close()
+
+def precio_delivery(nombre_empresa):
+    if nombre_empresa == "ATuCasa":
+        return 1800
+    elif nombre_empresa == "FoodNow":
+        return 2400
+    elif nombre_empresa == "PedidosNow":
+        return 900
+    elif nombre_empresa == "UbreFoods":
+        return 300
+    elif nombre_empresa == "ComidaAhora" or nombre_empresa == "DCComida":
+        return 3600
+    elif nombre_empresa == "FastDelivery":
+        return 1500
+    elif nombre_empresa == "Baloon":
+        return 4600
+    elif nombre_empresa == "SlowDelivery" or nombre_empresa == "NotRappido":
+        return 3300
+    elif nombre_empresa == "EsquinaShop":
+        return 600
+    elif nombre_empresa == "Speed" or nombre_empresa == "FoodBasics":
+        return 5400
+    elif nombre_empresa == "DCCRappi":
+        return 1300
+    elif nombre_empresa == "DidiEats":
+        return 2700
