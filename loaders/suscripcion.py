@@ -35,7 +35,6 @@ for fila in data["datos"]:
         "INSERT INTO DeliveryManager(correo_cliente, nombre_empresa, medio_de_pago, fecha_prox_pago, estado, fecha_ultimo_pago, monto_ultimo_pago, ciclo, precio) VALUES (%s, %s, %s, %s, %s, %s, %s, %0s, %s) ON CONFLICT (correo_cliente, nombre_empresa) DO NOTHING",
         (email, nombre, "débito", fecha_proximopago ,estado, fecha_ultimopago, ultimopago, ciclo, precio)
     )
-    conn.commit()
 
 conn.commit()
 cur.close()

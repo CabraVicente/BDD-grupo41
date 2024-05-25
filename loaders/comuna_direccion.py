@@ -4,7 +4,7 @@ import loaders.tools as loader
 conexion_insana = loader.connect()
 cur = conexion_insana.cursor()
 
-table_comuna = loader.load_table("data/comuna2.csv")
+table_comuna = loader.load_table("data/comuna.csv", ",")
 table_cliente = loader.load_table("data/clientes.csv")
 
 
@@ -25,8 +25,6 @@ cur.execute(
     PRIMARY KEY (comuna_cut, persona_correo, direccion)
     );"""
 )
-
-conexion_insana.commit()
 
 # Inserta los datos en la tabla Comuna
 for comuna in table_comuna["datos"]:

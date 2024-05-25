@@ -4,6 +4,7 @@ import psycopg2 as psql
 from web_table import print_table
 import cgi
 import cgitb
+import re
 
 cgitb.enable()
 
@@ -41,6 +42,9 @@ def result_get(cursor):
     return {"nombres":[d[0] for d in cur.description], "datos":cur.fetchall()}
 
 if consulta == 0:
+
+
+
     if (param[2] != ""):
         cur.execute(
             """SELECT %s FROM %s WHERE %s""" %
@@ -51,6 +55,7 @@ if consulta == 0:
             """SELECT %s FROM %s""" %
             (param[0], param[1])
         )
+
     resultado = result_get(cur)
 elif consulta == 1:
     cur.execute(
@@ -59,6 +64,7 @@ elif consulta == 1:
         ORDER BY restaurante.nombre""",
         (param[0],)
     )
+
     resultado = result_get(cur)
 elif consulta == 4 or consulta == 5:
     if (param[1] != "on"):
@@ -79,6 +85,7 @@ elif consulta == 4 or consulta == 5:
             ORDER BY plato.nombre""",
             (param[0],)
         )
+
     resultado = result_get(cur)
 elif consulta == 8:
     cur.execute(
@@ -88,6 +95,17 @@ elif consulta == 8:
         GROUP BY plato.nombre
         ORDER BY plato.nombre"""
     )
+
+    resultado = result_get(cur)
+elif consulta == 9:
+    cur.execute(
+        """SELECT id_pedido, calif_cliente, calif_pedido
+        FROM calificacion
+        WHERE calif_cliente >= %s AND calif_pedido >= %s
+        ORDER BY calif_cliente DESC, calif_pedido DESC""",
+        (int(param[0]),int(param[1]))
+    )
+
     resultado = result_get(cur)
 elif consulta == 10:
     cur.execute(

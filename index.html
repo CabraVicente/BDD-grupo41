@@ -57,8 +57,9 @@
     </form>
 
     <form action="./cgi-bin/consultas.py?type=9" method="post">
-        <h3>9. Calificaciones [X]</h3>
-        Valor mínimo: <input type="number" name="param0" min="1" max="5"><br>
+        <h3>9. Calificaciones</h3>
+        Mínima calificación al cliente: <input type="number" name="param0" min="1" max="5" required><br>
+        Mínima calificación al pedido: <input type="number" name="param1" min="1" max="5" required><br>
         <input type="submit" value="Consultar">
     </form>
 

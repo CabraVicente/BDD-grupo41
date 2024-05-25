@@ -12,10 +12,10 @@ def connect():
 
     return conn
 
-def load_table(filename):
+def load_table(filename, delimiter = ";", encoding = "utf-8"):
     data = []
-    with open(filename, "r", newline="") as f:
-        datos = csv.reader(f, delimiter=";")
+    with open(filename, "r", newline="", encoding=encoding) as f:
+        datos = csv.reader(f, delimiter=delimiter)
         for i in datos:
             data.append(i)
     

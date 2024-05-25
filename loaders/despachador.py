@@ -15,7 +15,6 @@ cur.execute(
     telefono VARCHAR(9) PRIMARY KEY
     );"""
 )
-conexion_insana.commit()
 
 for linea in table["datos"]:
 

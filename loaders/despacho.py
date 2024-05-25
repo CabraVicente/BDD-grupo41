@@ -7,16 +7,18 @@ conexion_insana = loader.connect()
 
 cur = conexion_insana.cursor()
 
-csv_path = "./data/clientes.csv"
+csv_path = "./data/cldeldes.csv"
 
 table = loader.load_table(csv_path)
 
 cur.execute(
-    """CREATE TABLE Cliente(
-    nombre VARCHAR(30),
-    correo VARCHAR(60) PRIMARY KEY,
-    telefono VARCHAR(9),
-    clave_hash VARCHAR(64)
+    """CREATE TABLE Despacho(
+    sucursal TEXT,
+    restaurante_nombre VARCHAR(30),
+    pedido_id INT REFERENCES Pedido(id),
+    despachador_telefono VARCHAR(9) REFERENCES Despachador(telefono),
+    FOREIGN KEY (sucursal, restaurante_nombre) REFERENCES Sucursal(sucursal, restaurante_nombre)
+    PRIMARY KEY (pedido_id, sucursal, restaurante_nombre)
     );"""
 )
 
