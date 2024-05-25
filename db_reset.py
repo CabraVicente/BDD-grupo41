@@ -15,7 +15,8 @@ tables = [
     #"Calificacion",
     "Plato",
     "Restaurante",
-    "Sucursal"
+    "Sucursal",
+    "Suscripcion"
 ]
 
 for table in tables:
