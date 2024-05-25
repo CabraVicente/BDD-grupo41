@@ -16,3 +16,5 @@ import loaders.restaurante_sucursal
 print("Loaded restaurantes y sucursales")
 import loaders.plato # Necesita que exista la tabla Restaurante
 print("Loaded platos")
+import loaders.suscripcion
+print("Loaded suscripcion")
