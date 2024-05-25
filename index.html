@@ -7,7 +7,7 @@
     <title>Formulario</title>
 </head>
 <body>
-    <h1>Formulario de Consultas Grupo 41</h1>
+    <h1>Formulario de Consultas EasyFood Grupo 41</h1>
     <form action="./cgi-bin/consultas.py?type=0" method="post">
         <h3>Consulta customizada</h3>
         SELECT <input type="text" name="param0"><br>
@@ -15,7 +15,7 @@
         WHERE <input type="text" name="param2"><br>
         <input type="submit" value="Consultar">
     </form>
-    <h2>Consultas fijas</h2>
+    <h2>Consultas fijas [X] = falta hacer, [-] = en proceso, nada = listo</h2>
     <form action="./cgi-bin/consultas.py?type=1" method="post">
         <h3>1. Restaurantes que ofrezcan un plato</h3>
         Nombre del plato: <input type="text" name="param0"><br>
@@ -23,13 +23,13 @@
     </form>
 
     <form action="./cgi-bin/consultas.py?type=2" method="post">
-        <h3>2. Pedidos de un cliente</h3>
+        <h3>2. Pedidos de un cliente [X]</h3>
         Email del cliente: <input type="email" name="param0"><br>
         <input type="submit" value="Consultar">
     </form>
 
     <form action="./cgi-bin/consultas.py?type=3" method="post">
-        <h3>3. Pedidos concretados y cancelados</h3>
+        <h3>3. Pedidos concretados y cancelados [X]</h3>
         <input type="submit" value="Consultar">
     </form>
 
@@ -37,6 +37,34 @@
         <h3>4 y 5. Platos segun su estilo</h3>
         Estilo: <input type="text" name="param0"><br>
         Mostrar restaurantes que lo ofrecen<input type="checkbox" id="restaurantes" name="param1"><br>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=6" method="post">
+        <h3>6. Restaurantes incluidos en suscripcion [X]</h3>
+        Email del cliente: <input type="email" name="param0"><br>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=7" method="post">
+        <h3>7. Gastos de cliente en pedidos [X]</h3>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=8" method="post">
+        <h3>8. Platos y sus restaurantes</h3>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=9" method="post">
+        <h3>9. Calificaciones [X]</h3>
+        Valor mínimo: <input type="number" name="param0" min="1" max="5"><br>
+        <input type="submit" value="Consultar">
+    </form>
+
+    <form action="./cgi-bin/consultas.py?type=10" method="post">
+        <h3>10. Platos con alérgenos</h3>
+        Alérgeno: <input type="text" name="param0"><br>
         <input type="submit" value="Consultar">
     </form>
 </body>

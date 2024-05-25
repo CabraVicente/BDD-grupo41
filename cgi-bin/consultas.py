@@ -71,13 +71,34 @@ elif consulta == 4 or consulta == 5:
         )
     else:
         cur.execute(
-            """SELECT plato.nombre AS plato, restaurante.nombre AS restaurante
-            FROM plato, restaurante
-            WHERE plato.restaurante_nombre = restaurante.nombre AND
+            """SELECT plato.nombre AS plato, restaurante.nombre AS restaurante, string_agg(sucursal.area_de_despacho, ', ') AS comunas_con_delivery
+            FROM plato, restaurante, sucursal
+            WHERE plato.restaurante_nombre = restaurante.nombre AND restaurante.nombre = sucursal.restaurante_nombre AND
                 plato.estilo=%s
+            GROUP BY plato.nombre, restaurante.nombre
             ORDER BY plato.nombre""",
             (param[0],)
         )
+    resultado = result_get(cur)
+elif consulta == 8:
+    cur.execute(
+        """SELECT plato.nombre AS plato, string_agg(restaurante.nombre, ', ') AS restaurantes
+        FROM plato,restaurante
+        WHERE plato.restaurante_nombre = restaurante.nombre
+        GROUP BY plato.nombre
+        ORDER BY plato.nombre"""
+    )
+    resultado = result_get(cur)
+elif consulta == 10:
+    cur.execute(
+        """SELECT nombre AS plato, ingredientes
+        FROM plato
+        WHERE ingredientes LIKE '%%' || %s || '%%'
+        GROUP BY plato, ingredientes
+        ORDER BY plato.nombre""",
+        (param[0],)
+    )
+
     resultado = result_get(cur)
 
 print_table(resultado)
