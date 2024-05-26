@@ -18,14 +18,15 @@ cur.execute(
     pedido_id INT,
     calif_pedido FLOAT,
     calif_cliente FLOAT,
-    FOREIGN KEY (pedido_id) REFERENCES Pedido(id),
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(id) ON DELETE CASCADE,
     PRIMARY KEY (pedido_id)
     );"""
 )
 
 cur.execute(
     """CREATE TABLE Pedido_Plato(
-    pedido_id INT REFERENCES Pedido(id),
+    pedido_id INT,
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(id) ON DELETE CASCADE,
     plato_id INT,
     restaurante_nombre VARCHAR(30),
     cantidad INT,
@@ -35,6 +36,7 @@ cur.execute(
     );"""
 )
 
+bad_data = 0
 data = loader.load_table("./data/pedidos.csv", encoding = "latin-1")
 for x in data["datos"]:
     id, cliente, sucursal, delivery, despachador, platos, fecha, hora, estado = x
@@ -48,6 +50,17 @@ for x in data["datos"]:
         """,
         (int(id), cliente[:60], estado, fecha + " " + hora, cliente[:60])
     )
+
+    cur.execute(
+        """
+        SELECT id
+        FROM Pedido
+        WHERE %s IN (SELECT id FROM Pedido)
+        """,
+        (int(id),)
+    )
+    if (cur.fetchone() is None):
+        bad_data += 1
 
     platos_del_pedido = []
     cantidades = {}

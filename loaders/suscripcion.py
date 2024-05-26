@@ -1,39 +1,60 @@
 import psycopg2 as psql
 import loaders.tools as loader
 
+
+# Opcion con SQL, no sé si funcione, hay que probarla
+
 conn = loader.connect()
 cur = conn.cursor()
 
 data = loader.load_table("./data/suscripciones.csv")
 
-#Revisar que hacer con precio, ya que para ello necesitamos sacar información de deliverymanager
 cur.execute(
     """CREATE TABLE Suscripcion(
-    correo_cliente VARCHAR(64) FOREIGN KEY,
-    nombre_empresa VARCHAR(30) FOREIGN KEY,
+    correo_cliente VARCHAR(64) REFERENCES Cliente(correo),
+    nombre_empresa VARCHAR(30) REFERENCES EmpresaDelivery(nombre),
     medio_de_pago VARCHAR(30),
     fecha_prox_pago DATE,
     estado VARCHAR(30),
     fecha_ultimo_pago DATE,
     monto_ultimo_pago INT,
-    ciclo TEXT NO NULL,
-    precio INTEGER
+    ciclo TEXT NOT NULL,
     PRIMARY KEY (correo_cliente, nombre_empresa)
     );"""
 )
 
 for fila in data["datos"]:
     email, nombre, estado, ultimopago, fecha_ultimopago, ciclo = fila
-    fecha_ultimo = "20"+fecha_ultimopago[6:]+fecha_ultimopago[2:6]+fecha_ultimopago[:2]
-    precio = loader.precio_delivery(nombre) * 4
-    if ciclo == "anual":
-        precio = precio * 12
-        fecha_proximopago = str(int(fecha_ultimo[:4])+1)+fecha_ultimo[4:]
-    else:
-        fecha_proximopago = fecha_ultimo[:5]+str(int(fecha_ultimo[5:7])+1)+fecha_ultimo[7:]
+    fecha_ultimo = "20" + fecha_ultimopago[6:] + "-" + fecha_ultimopago[3:5] + "-" + fecha_ultimopago[:2]
+    
+    # calculando fecha de siguiente pago
     cur.execute(
-        "INSERT INTO DeliveryManager(correo_cliente, nombre_empresa, medio_de_pago, fecha_prox_pago, estado, fecha_ultimo_pago, monto_ultimo_pago, ciclo, precio) VALUES (%s, %s, %s, %s, %s, %s, %s, %0s, %s) ON CONFLICT (correo_cliente, nombre_empresa) DO NOTHING",
-        (email, nombre, "débito", fecha_proximopago ,estado, fecha_ultimopago, ultimopago, ciclo, precio)
+        """
+        CREATE TABLE temp(
+            fecha DATE
+        );
+
+        INSERT INTO temp(fecha) VALUES(%s);
+        """,
+        (fecha_ultimo,)
+    )
+    if ciclo == "anual":
+        cur.execute("SELECT fecha + INTERVAL '1 year' FROM temp;")
+        fecha_proximopago = cur.fetchone()[0]
+    else:
+        cur.execute("SELECT fecha + INTERVAL '1 month' FROM temp;")
+        fecha_proximopago = cur.fetchone()[0]
+    
+    cur.execute("DROP TABLE temp")
+    cur.execute(
+        """
+        INSERT INTO Suscripcion(correo_cliente, nombre_empresa, medio_de_pago, fecha_prox_pago, estado, fecha_ultimo_pago, monto_ultimo_pago, ciclo)
+        SELECT %s, %s, %s, %s, %s, %s, %s, %s
+        WHERE %s IN (SELECT correo FROM Cliente) AND %s IN (SELECT nombre FROM EmpresaDelivery)
+        ON CONFLICT (correo_cliente, nombre_empresa) DO NOTHING;
+        """,
+        (email, nombre, "debito", fecha_proximopago ,estado, fecha_ultimo, ultimopago, ciclo,
+        email, nombre)
     )
 
 conn.commit()

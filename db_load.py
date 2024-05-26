@@ -16,5 +16,7 @@ import loaders.plato # Necesita que exista la tabla Restaurante
 print("Loaded platos")
 import loaders.pedido_calificacion # Necesita que exista la tabla Restaurante, Plato y Cliente
 print("Loaded Pedido y Calificacion")
-import loaders.suscripcion_3 # Necesita que exista la tabla Cliente y EmpresaDelivery
+import loaders.suscripcion # Necesita que exista la tabla Cliente y EmpresaDelivery
 print("loaded sus")
+import loaders.despacho # Necesita que exista la tabla Pedido_Plato, Plato, Despachador, Restaurante y Sucursal
+print("loaded despachos")

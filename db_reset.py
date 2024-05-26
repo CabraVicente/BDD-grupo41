@@ -11,13 +11,15 @@ tables = [
     "Direccion",
     "EmpresaDelivery",
     "Despachador",
+    "EmpresaDelivery_Despachador",
     "Pedido",
     "Calificacion",
     "Plato",
     "Pedido_Plato",
     "Restaurante",
     "Sucursal",
-    "Suscripcion"
+    "Suscripcion",
+    "Despacho"
 ]
 
 for table in tables:

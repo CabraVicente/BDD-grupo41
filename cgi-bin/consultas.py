@@ -42,9 +42,6 @@ def result_get(cursor):
     return {"nombres":[d[0] for d in cur.description], "datos":cur.fetchall()}
 
 if consulta == 0:
-
-
-
     if (param[2] != ""):
         cur.execute(
             """SELECT %s FROM %s WHERE %s""" %
