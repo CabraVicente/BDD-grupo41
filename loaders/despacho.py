@@ -66,6 +66,27 @@ for linea in table["datos"]:
         continue
     despachador_telefono = res[0]
 
+    # Revisando si la sucursal existe. si no, simplemente escoge la primera sucursal del restorán
+    cur.execute(
+        """
+        SELECT sucursal
+        FROM Sucursal
+        WHERE sucursal = %s AND restaurante_nombre = %s;
+        """,
+        (sucursal, restaurante)
+    )
+
+    if (cur.fetchone() is None):
+        cur.execute(
+            """
+            SELECT sucursal
+            FROM Sucursal
+            WHERE restaurante_nombre = %s;
+            """,
+            (restaurante,)
+        )
+        sucursal = cur.fetchone()[0]
+
     cur.execute(
         """
         INSERT INTO Despacho(pedido_id, sucursal, restaurante_nombre, despachador_telefono, empresa_nombre)

@@ -1,6 +1,7 @@
 import psycopg2 as psql
 import csv
 import re
+import sys
 
 def connect():
     conn = psql.connect(
@@ -18,8 +19,12 @@ def load_table(filename, delimiter = ";", encoding = "utf-8"):
     bad_chars = r'[^a-zA-Z:";0-9 ,.\n-@]'
     
     to_fix = []
-    with open(filename, "r", encoding=encoding) as f:
-        to_fix = f.readlines()
+    try:
+        with open(filename, "r", encoding=encoding) as f:
+            to_fix = f.readlines()
+    except:
+        print("ERROR DE ENCODING: el archivo '" + filename + "' debería tener encoding '" + encoding + "'")
+        sys.exit(1)
     
     with open("data/temp.csv", "w") as f:
         for line in to_fix:

@@ -15,7 +15,7 @@
         WHERE <input type="text" name="param2"><br>
         <input type="submit" value="Consultar">
     </form>
-    <h2>Consultas fijas [X] = falta hacer, [-] = en proceso, nada = listo</h2>
+    <h2>Consultas fijas</h2>
     <form action="./cgi-bin/consultas.py?type=1" method="post">
         <h3>1. Restaurantes que ofrezcan un plato</h3>
         Nombre del plato: <input type="text" name="param0"><br>
@@ -23,13 +23,13 @@
     </form>
 
     <form action="./cgi-bin/consultas.py?type=2" method="post">
-        <h3>2. Pedidos de un cliente [X]</h3>
+        <h3>2. Pedidos de un cliente y sus gastos mensuales</h3>
         Email del cliente: <input type="email" name="param0"><br>
         <input type="submit" value="Consultar">
     </form>
 
     <form action="./cgi-bin/consultas.py?type=3" method="post">
-        <h3>3. Pedidos concretados y cancelados [X]</h3>
+        <h3>3. Pedidos concretados y cancelados</h3>
         <input type="submit" value="Consultar">
     </form>
 
@@ -41,13 +41,13 @@
     </form>
 
     <form action="./cgi-bin/consultas.py?type=6" method="post">
-        <h3>6. Restaurantes incluidos en suscripcion [X]</h3>
+        <h3>6. Restaurantes incluidos en suscripcion</h3>
         Email del cliente: <input type="email" name="param0"><br>
         <input type="submit" value="Consultar">
     </form>
 
     <form action="./cgi-bin/consultas.py?type=7" method="post">
-        <h3>7. Gastos de cliente en pedidos [X]</h3>
+        <h3>7. Gastos de clientes en pedidos</h3>
         <input type="submit" value="Consultar">
     </form>
 

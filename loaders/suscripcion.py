@@ -11,15 +11,15 @@ data = loader.load_table("./data/suscripciones.csv")
 
 cur.execute(
     """CREATE TABLE Suscripcion(
-    correo_cliente VARCHAR(64) REFERENCES Cliente(correo),
-    nombre_empresa VARCHAR(30) REFERENCES EmpresaDelivery(nombre),
+    cliente_correo VARCHAR(64) REFERENCES Cliente(correo),
+    empresa_nombre VARCHAR(30) REFERENCES EmpresaDelivery(nombre),
     medio_de_pago VARCHAR(30),
     fecha_prox_pago DATE,
     estado VARCHAR(30),
     fecha_ultimo_pago DATE,
     monto_ultimo_pago INT,
     ciclo TEXT NOT NULL,
-    PRIMARY KEY (correo_cliente, nombre_empresa)
+    PRIMARY KEY (cliente_correo, empresa_nombre)
     );"""
 )
 
@@ -48,10 +48,10 @@ for fila in data["datos"]:
     cur.execute("DROP TABLE temp")
     cur.execute(
         """
-        INSERT INTO Suscripcion(correo_cliente, nombre_empresa, medio_de_pago, fecha_prox_pago, estado, fecha_ultimo_pago, monto_ultimo_pago, ciclo)
+        INSERT INTO Suscripcion(cliente_correo, empresa_nombre, medio_de_pago, fecha_prox_pago, estado, fecha_ultimo_pago, monto_ultimo_pago, ciclo)
         SELECT %s, %s, %s, %s, %s, %s, %s, %s
         WHERE %s IN (SELECT correo FROM Cliente) AND %s IN (SELECT nombre FROM EmpresaDelivery)
-        ON CONFLICT (correo_cliente, nombre_empresa) DO NOTHING;
+        ON CONFLICT (cliente_correo, empresa_nombre) DO NOTHING;
         """,
         (email, nombre, "debito", fecha_proximopago ,estado, fecha_ultimo, ultimopago, ciclo,
         email, nombre)

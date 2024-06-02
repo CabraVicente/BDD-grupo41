@@ -8,8 +8,8 @@ import loaders.comuna_direccion # Necesita que exista la tabla Cliente
 print("Loaded comunas y direccion")
 import loaders.empresadelivery
 print("Loaded empresas de delivery")
-import loaders.despachador
-print("Loaded despachadores")
+import loaders.despachador # Necesita que exista la tabla EmpresaDelivery
+print("Loaded despachadores y EmpresaDelivery_Despachadores")
 import loaders.restaurante_sucursal
 print("Loaded restaurantes y sucursales")
 import loaders.plato # Necesita que exista la tabla Restaurante
