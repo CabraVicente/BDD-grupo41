@@ -42,18 +42,23 @@ def result_get(cursor):
     return {"nombres":[d[0] for d in cur.description], "datos":cur.fetchall()}
 
 if consulta == 0:
-    if (param[2] != ""):
-        cur.execute(
-            """SELECT %s FROM %s WHERE %s""" %
-            (param[0], param[1], param[2])
-        )
-    else:
-        cur.execute(
-            """SELECT %s FROM %s""" %
-            (param[0], param[1])
-        )
+    try:
+        if (";" in param[0] or ";" in param[1] or ";" in param[2]):
+            raise Exception("intento de inserción")
+        if (param[2] != ""):
+            cur.execute(
+                """SELECT %s FROM %s WHERE %s""" %
+                (param[0], param[1], param[2])
+            )
+        else:
+            cur.execute(
+                """SELECT %s FROM %s""" %
+                (param[0], param[1])
+            )
 
-    resultado = result_get(cur)
+        resultado = result_get(cur)
+    except:
+        resultado = {"nombres": ["No se pudo hacer la consulta."], "datos":[["Asegurate de que el formato de tu consulta sea correcto y\nque no estes accediendo a tablas que no existen."]]}
 elif consulta == 1:
     cur.execute(
         """SELECT restaurante.nombre AS Restaurante FROM restaurante,plato
